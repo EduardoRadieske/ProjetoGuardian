@@ -45,7 +45,7 @@ public class Ocr
             // Convertendo a imagem em texto usando Tesseract
             String text = this.tesseract.doOCR(imagem);
 
-            // Imprimindo o texto extraído
+            // Extraindo os resíduos de leitura incompleta.
             Matcher matcher = regex.matcher(text.trim());
             //System.out.println("DEBUG: " + text.trim());
             

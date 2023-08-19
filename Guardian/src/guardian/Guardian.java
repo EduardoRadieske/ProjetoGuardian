@@ -10,22 +10,23 @@ public class Guardian
 {
     
     private static String strPlaca;
+    private static Raspberry rp;
     
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args)
-    {
-        // TODO - INTEGRAÇÃO COM O RASPBERRY PI
+    {    
+        rp = Raspberry.getInstance();
         
         while (true) 
         {
-            strPlaca = "";
+            strPlaca = "XEF1C26";
 
-            iniciarProcessamento();
+            //iniciarProcessamento();
             processarPlacaAutorizada();
             
-            //aguardar(1000, "main");
+            aguardar(1000, "main");
         }
     }
     
@@ -62,7 +63,11 @@ public class Guardian
         if (!"".equals(strPlaca))
         {
             Placas vagaPlaca = Placas.validarPlaca(strPlaca);
-            System.out.println("RESULT: " + vagaPlaca.name());
+            vagaPlaca.enviarBinario(rp.getPinos());
+            
+            aguardar(5000, "processarPlacaAutorizada");
+            
+            rp.setPinosLow();
         }
     }
     
