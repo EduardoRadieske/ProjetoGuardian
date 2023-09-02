@@ -60,9 +60,9 @@ public enum Placas
    
     static
     {
-        placas.put("KGA9435", 1);
+        placas.put("KMA9435", 1);
         placas.put("XEF1C26", 2);
-        placas.put("DSD8G61", 3);
+        placas.put("DSD8F61", 3);
     }
     
     public static Placas validarPlaca(String strPlaca)

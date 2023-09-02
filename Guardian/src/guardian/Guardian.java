@@ -21,9 +21,9 @@ public class Guardian
         
         while (true) 
         {
-            strPlaca = "XEF1C26";
+            strPlaca = "";
 
-            //iniciarProcessamento();
+            iniciarProcessamento();
             processarPlacaAutorizada();
             
             aguardar(1000, "main");
@@ -48,7 +48,6 @@ public class Guardian
             {   
                 strPlaca = placa.get();
                 System.out.println("PLACA 2: " + strPlaca);
-                System.out.println("Processou!");
             }
             
             return;

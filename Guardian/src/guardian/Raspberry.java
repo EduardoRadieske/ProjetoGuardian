@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package guardian;
 
 import com.pi4j.io.gpio.GpioController;
@@ -12,6 +7,7 @@ import com.pi4j.io.gpio.PinState;
 import com.pi4j.io.gpio.RaspiPin;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  *
@@ -38,7 +34,7 @@ public class Raspberry
     
     public static synchronized Raspberry getInstance() 
     {
-        if (INSTANCE == null)
+        if (Objects.isNull(INSTANCE))
         {
             INSTANCE = new Raspberry();
             System.out.println("Criou novo Raspberry!");

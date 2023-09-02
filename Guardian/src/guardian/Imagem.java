@@ -17,7 +17,7 @@ public class Imagem
 {   
     private static Imagem INSTANCE;
 
-    private final String CAMINHO_IMAGENS = "C:\\Users\\eduar\\Desktop\\Imagens";
+    private final String CAMINHO_IMAGENS = "imagens";
     private File arquivoJpg;
     private File arquivoJpgFinal;
     
@@ -26,7 +26,7 @@ public class Imagem
     
     private Imagem()
     {
-        this.webcam = Webcam.getDefault();
+        //this.webcam = Webcam.getDefault();
         
         if (Objects.isNull(this.webcam))
         {   
@@ -50,35 +50,35 @@ public class Imagem
     
     public void tirarFoto()
     {
-        webcam.open();
+        /*webcam.open();
         
-        BufferedImage imagem = webcam.getImage();
+        BufferedImage imagem = webcam.getImage();*/
 
-        this.arquivoJpg = new File(this.CAMINHO_IMAGENS + "\\imagem.jpg");
+        this.arquivoJpg = new File(this.CAMINHO_IMAGENS + "/imagem.jpg");
         
-        if (this.arquivoJpg.exists())
+        /*if (this.arquivoJpg.exists())
         {
             this.arquivoJpg.delete();
-        }
+        }*/
         
-        this.arquivoJpgFinal = new File(this.CAMINHO_IMAGENS + "\\imagem_final.jpg");
+        this.arquivoJpgFinal = new File(this.CAMINHO_IMAGENS + "/imagem_final.jpg");
         
         if (this.arquivoJpgFinal.exists())
         {
             this.arquivoJpgFinal.delete();
-        } 
+        }
         
-        try 
+        /*try 
         {
             ImageIO.write(imagem, "jpg", this.arquivoJpg);
             System.out.println("Imagem Salva!");
         } 
         catch (IOException e) 
         {
-            e.printStackTrace();
+            System.err.println("Erro ao obter a imagem: " + e.getMessage());
         }
         
-        webcam.close();
+        webcam.close();*/
     }
     
     public void aplicarPretoBranco()
@@ -96,7 +96,7 @@ public class Imagem
         } 
         catch (IOException e) 
         {
-            e.printStackTrace();
+            System.err.println("Erro ao aplicar preto e branco na imagem: " + e.getMessage());
         }
     }
     

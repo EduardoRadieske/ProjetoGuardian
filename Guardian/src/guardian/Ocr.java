@@ -1,6 +1,7 @@
 package guardian;
 
 import java.io.File;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -22,12 +23,12 @@ public class Ocr
     private Ocr()
     {
         this.tesseract = new Tesseract();
-        this.tesseract.setDatapath("D:\\OCR");
+        this.tesseract.setDatapath("./ocr");
     }
     
     public static synchronized Ocr getInstance() 
     {
-        if (INSTANCE == null)
+        if (Objects.isNull(INSTANCE))
         {
             INSTANCE = new Ocr();
             System.out.println("Criou novo Processamento!");
@@ -44,10 +45,10 @@ public class Ocr
         {
             // Convertendo a imagem em texto usando Tesseract
             String text = this.tesseract.doOCR(imagem);
-
+           
             // Extraindo os resíduos de leitura incompleta.
             Matcher matcher = regex.matcher(text.trim());
-            //System.out.println("DEBUG: " + text.trim());
+            System.out.println("DEBUG OCR: " + text.trim());
             
             if (matcher.find())
             {
@@ -56,7 +57,7 @@ public class Ocr
         } 
         catch (TesseractException e) 
         {
-            System.err.println("Erro ao processar a imagem: " + e.getMessage());
+            e.printStackTrace();
         }
         
         return placa;
