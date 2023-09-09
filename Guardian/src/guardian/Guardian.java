@@ -12,12 +12,15 @@ public class Guardian
     private static String strPlaca;
     private static Raspberry rp;
     
+    private static int tentativas;
+    
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args)
     {    
         rp = Raspberry.getInstance();
+        tentativas = 0;
         
         while (true) 
         {
@@ -26,35 +29,51 @@ public class Guardian
             iniciarProcessamento();
             processarPlacaAutorizada();
             
-            aguardar(1000, "main");
+            // Validação para deixar 5 segundos parado caso não tenha resposta na imagem.
+            if (tentativas > 3)
+            {
+                aguardar(5000, "main");
+                tentativas = 0;
+            } 
+            else 
+            {
+                aguardar(1000, "main");
+            }
         }
     }
     
     private static void iniciarProcessamento() 
     {
-        Imagem imgPlaca = Imagem.getInstance();
+        Imagem imgPlaca = new Imagem();
         imgPlaca.tirarFoto();
-        
+           
         Ocr ocrImg = Ocr.getInstance();
         
         Optional<String> placa = ocrImg.extrairPlaca(imgPlaca.getImagem());
-   
+
         if (!placa.isPresent())
         {
             imgPlaca.aplicarPretoBranco();
+            
             placa = ocrImg.extrairPlaca(imgPlaca.getImagem());
             
             if (placa.isPresent()) 
             {   
                 strPlaca = placa.get();
+                tentativas = 0;
                 System.out.println("PLACA 2: " + strPlaca);
+            } 
+            else 
+            {
+                tentativas++;
             }
             
             return;
         }
         
+        tentativas = 0;
         strPlaca = placa.get();
-        System.out.println("PLACA: " + strPlaca);       
+        System.out.println("PLACA: " + strPlaca);      
     }
     
     private static void processarPlacaAutorizada()

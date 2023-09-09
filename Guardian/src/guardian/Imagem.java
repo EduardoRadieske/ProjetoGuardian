@@ -1,7 +1,5 @@
 package guardian;
 
-import com.github.sarxos.webcam.Webcam;
-import com.github.sarxos.webcam.WebcamResolution;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorConvertOp;
 import java.io.File;
@@ -15,70 +13,31 @@ import javax.imageio.ImageIO;
  */
 public class Imagem
 {   
-    private static Imagem INSTANCE;
-
     private final String CAMINHO_IMAGENS = "imagens";
     private File arquivoJpg;
     private File arquivoJpgFinal;
     
-    private Webcam webcam;
-    
-    
-    private Imagem()
-    {
-        //this.webcam = Webcam.getDefault();
-        
-        if (Objects.isNull(this.webcam))
-        {   
-            System.out.println("Nenhuma webcam encontrada.");
-            return;
-        }
-        
-        this.webcam.setViewSize(WebcamResolution.VGA.getSize());
-    }
-    
-    public static synchronized Imagem getInstance() 
-    {
-        if (Objects.isNull(INSTANCE))
-        {
-            INSTANCE = new Imagem();
-            System.out.println("Criou nova conexão com a câmera!");
-        }
-        
-        return INSTANCE;
-    }
-    
     public void tirarFoto()
-    {
-        /*webcam.open();
-        
-        BufferedImage imagem = webcam.getImage();*/
-
-        this.arquivoJpg = new File(this.CAMINHO_IMAGENS + "/imagem.jpg");
-        
-        /*if (this.arquivoJpg.exists())
+    { 
+        try 
         {
-            this.arquivoJpg.delete();
-        }*/
+            Process process = Runtime.getRuntime().exec("raspistill -o " + this.CAMINHO_IMAGENS + "/imagem.jpg -t 1000");
+            process.waitFor();
+            System.out.println("Foto tirada com sucesso.");
+        } 
+        catch (IOException | InterruptedException e) 
+        {
+            e.printStackTrace();
+        }
+        
+        this.arquivoJpg = new File(this.CAMINHO_IMAGENS + "/imagem.jpg");
         
         this.arquivoJpgFinal = new File(this.CAMINHO_IMAGENS + "/imagem_final.jpg");
         
         if (this.arquivoJpgFinal.exists())
         {
             this.arquivoJpgFinal.delete();
-        }
-        
-        /*try 
-        {
-            ImageIO.write(imagem, "jpg", this.arquivoJpg);
-            System.out.println("Imagem Salva!");
         } 
-        catch (IOException e) 
-        {
-            System.err.println("Erro ao obter a imagem: " + e.getMessage());
-        }
-        
-        webcam.close();*/
     }
     
     public void aplicarPretoBranco()
