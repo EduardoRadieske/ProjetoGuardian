@@ -29,7 +29,9 @@ public class Ocr
     private Ocr()
     {
         this.tesseract = new Tesseract();
-        this.tesseract.setDatapath("./ocr");
+        this.tesseract.setDatapath("./projetoguardian/ocr");
+        this.tesseract.setVariable("user_defined_timeout", "5000");
+        this.tesseract.setLanguage("eng");
         System.out.println("Criou novo Processamento!");
     }
     
@@ -62,6 +64,9 @@ public class Ocr
                 {
                     return placa;
                 }
+                
+                text = text.replaceAll("[^a-zA-Z0-9 ]", "").toUpperCase();
+                
                 // Extraindo os resíduos de leitura incompleta.
                 Matcher matcher = regex.matcher(text.trim());
                 System.out.println("DEBUG OCR: " + text.trim());

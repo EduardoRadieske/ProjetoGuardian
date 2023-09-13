@@ -46,6 +46,8 @@ public class Guardian
     {
         Imagem imgPlaca = new Imagem();
         imgPlaca.tirarFoto();
+        imgPlaca.aplicarPretoBranco();
+        imgPlaca.suavizarImagem();
            
         Ocr ocrImg = Ocr.getInstance();
         
@@ -53,9 +55,8 @@ public class Guardian
 
         if (!placa.isPresent())
         {
-            imgPlaca.aplicarPretoBranco();
-            
-            placa = ocrImg.extrairPlaca(imgPlaca.getImagem());
+            System.out.println("SEGUNDA TENTANTIVA LEITURA!");
+            placa = ocrImg.extrairPlaca(imgPlaca.getImagemSuavizada());
             
             if (placa.isPresent()) 
             {   
