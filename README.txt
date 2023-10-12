@@ -19,8 +19,8 @@ O Projeto Guardian é um sistema desenvolvido em Java 8 para Raspberry Pi 3B+ qu
         # Pasta para armazenar as imagens capturadas pela câmera
     /lib
         # Pasta para armazenar bibliotecas e dependências
-	/ocr 
-		# Pasta para armanezar os arquivos de linguagem do OCR
+    /ocr 
+	# Pasta para armanezar os arquivos de linguagem do OCR
     Guardian.jar
 
 
